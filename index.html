@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnerSignal - Antecipamos Sinais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0A4D3C;
+            --primary-light: #0F6B52;
+            --accent: #00D9A3;
+            --accent-glow: rgba(0, 217, 163, 0.3);
+            --dark: #0D1821;
+            --text: #E8F0F2;
+            --text-muted: #A8B2B8;
+            --background: #050A0E;
+            --surface: #111A24;
+            --gradient-1: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            --gradient-2: linear-gradient(135deg, #00D9A3 0%, #0A4D3C 100%);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(5, 10, 14, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 217, 163, 0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 8rem 3rem 4rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.5; }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            animation: fadeInLeft 1s ease-out;
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.03em;
+        }
+
+        .hero h1 .accent {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 550px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient-2);
+            color: var(--dark);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeInRight 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .device-mockup {
+            width: 100%;
+            height: 500px;
+            background: var(--surface);
+            border-radius: 30px;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid rgba(0, 217, 163, 0.2);
+            box-shadow: 0 30px 80px rgba(0, 217, 163, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .device-inner {
+            width: 80%;
+            height: 80%;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 3rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Problem Section */
+        .problem {
+            background: var(--surface);
+            border-radius: 40px;
+            padding: 5rem;
+            margin: 0 auto;
+            max-width: 1200px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .problem-card {
+            padding: 2rem;
+            border-radius: 20px;
+            background: rgba(0, 217, 163, 0.05);
+            border: 1px solid rgba(0, 217, 163, 0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .problem-card:nth-child(1) { animation-delay: 0.1s; }
+        .problem-card:nth-child(2) { animation-delay: 0.2s; }
+        .problem-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .problem-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            background: rgba(0, 217, 163, 0.1);
+        }
+
+        .problem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        /* Solution Section */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .solution-features {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .feature {
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 20px;
+            border-left: 4px solid var(--accent);
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+
+        .feature:nth-child(1) { animation-delay: 0.1s; }
+        .feature:nth-child(2) { animation-delay: 0.2s; }
+        .feature:nth-child(3) { animation-delay: 0.3s; }
+
+        .feature:hover {
+            transform: translateX(10px);
+            background: rgba(0, 217, 163, 0.08);
+        }
+
+        .feature h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+
+        .feature p {
+            color: var(--text-muted);
+        }
+
+        .solution-visual {
+            background: var(--gradient-1);
+            border-radius: 30px;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInRight 1s ease-out 0.3s forwards;
+        }
+
+        .solution-visual::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+        }
+
+        /* App Section */
+        .app-preview {
+            background: var(--surface);
+            border-radius: 40px;
+            padding: 5rem;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: radial-gradient(circle at top right, var(--accent-glow), transparent);
+            opacity: 0.2;
+        }
+
+        .app-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-feature {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: rgba(0, 217, 163, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .app-feature:nth-child(1) { animation-delay: 0.1s; }
+        .app-feature:nth-child(2) { animation-delay: 0.2s; }
+        .app-feature:nth-child(3) { animation-delay: 0.3s; }
+        .app-feature:nth-child(4) { animation-delay: 0.4s; }
+
+        .app-feature:hover {
+            background: rgba(0, 217, 163, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .app-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-feature h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        /* Market Section */
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: var(--surface);
+            border-radius: 25px;
+            border: 1px solid rgba(0, 217, 163, 0.2);
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px var(--accent-glow);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Fraunces', serif;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        /* Pricing */
+        .pricing-card {
+            max-width: 600px;
+            margin: 4rem auto 0;
+            background: var(--surface);
+            border-radius: 30px;
+            padding: 4rem;
+            text-align: center;
+            border: 2px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-2);
+        }
+
+        .price {
+            font-size: 5rem;
+            font-weight: 800;
+            font-family: 'Fraunces', serif;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-features {
+            text-align: left;
+            margin: 2rem 0;
+        }
+
+        .pricing-features li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(0, 217, 163, 0.1);
+            color: var(--text-muted);
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface);
+            padding: 4rem 3rem 2rem;
+            margin-top: 8rem;
+            border-top: 1px solid rgba(0, 217, 163, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            max-width: 350px;
+        }
+
+        .footer-logo {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 217, 163, 0.1);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient-1);
+            border-radius: 40px;
+            padding: 5rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            border-radius: 50%;
+            filter: blur(150px);
+            opacity: 0.2;
+        }
+
+        .cta-section h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .btn-primary {
+            background: white;
+            color: var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content, .solution-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 3rem;
+            }
+
+            .app-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav .container {
+                padding: 1rem 2rem;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+
+            .problem-grid, .market-stats, .app-features {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            .problem, .app-preview, .cta-section {
+                padding: 3rem 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">InnerSignal</div>
+            <ul>
+                <li><a href="#home">Início</a></li>
+                <li><a href="#problema">Problema</a></li>
+                <li><a href="#solucao">Solução</a></li>
+                <li><a href="#mercado">Mercado</a></li>
+                <li><a href="#precos">Preços</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    <span class="accent">Antecipamos</span><br>
+                    sinais.
+                </h1>
+                <p>
+                    Um clip inteligente que transforma a tua sanita num aliado silencioso 
+                    da saúde preventiva. Porque detetar mais cedo... muda tudo.
+                </p>
+                <div class="cta-buttons">
+                    <a href="#solucao" class="btn btn-primary">Descobre como funciona</a>
+                    <a href="#contacto" class="btn btn-secondary">Sabe mais</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="device-mockup">
+                    <div class="device-inner">
+                        <div class="device-glow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problema">
+        <div class="container">
+            <div class="section-header">
+                <h2>O Problema</h2>
+                <p>
+                    A maioria das pessoas só faz análises quando já tem sintomas. 
+                    Mas muitas doenças deixam sinais muito antes.
+                </p>
+            </div>
+            <div class="problem">
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-icon">💰</div>
+                        <h3>Caro e demorado</h3>
+                        <p>Ir ao médico é dispendioso, demorado e acontece poucas vezes por ano.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">⚕️</div>
+                        <h3>Deteção tardia</h3>
+                        <p>Muitas doenças graves como cancro da próstata, endometriose e diabetes dão sinais precoces na urina.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🔬</div>
+                        <h3>Sem monitorização contínua</h3>
+                        <p>Não existe uma forma prática e acessível de monitorizar a saúde no dia a dia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solucao">
+        <div class="container">
+            <div class="section-header">
+                <h2>A Solução InnerSignal</h2>
+                <p>
+                    Monitorização automática, contínua e não invasiva da tua saúde 
+                    através de um dispositivo inteligente instalado na sanita.
+                </p>
+            </div>
+            <div class="solution-grid">
+                <div class="solution-features">
+                    <div class="feature">
+                        <h3>🔄 Totalmente Automático</h3>
+                        <p>
+                            Analisa automaticamente a urina durante o uso normal da sanita. 
+                            Sem testes descartáveis, sem ações adicionais.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <h3>🧬 Tecnologia Médica</h3>
+                        <p>
+                            Combina sensores óticos, eletroquímicos e físicos reutilizáveis. 
+                            Autolimpeza com LEDs UV-C a cada descarga.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <h3>🤖 Inteligência Artificial</h3>
+                        <p>
+                            A IA analisa padrões e tendências ao longo do tempo, 
+                            funcionando como sistema de alerta precoce.
+                        </p>
+                    </div>
+                </div>
+                <div class="solution-visual"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Section -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>App Intuitiva</h2>
+                <p>
+                    Todos os dados na palma da tua mão, apresentados de forma simples 
+                    através de cores e gráficos de evolução.
+                </p>
+            </div>
+            <div class="app-preview">
+                <div class="app-features">
+                    <div class="app-feature">
+                        <div class="app-icon">📊</div>
+                        <h4>Gráficos Simples</h4>
+                        <p>Visualização clara da evolução ao longo do tempo</p>
+                    </div>
+                    <div class="app-feature">
+                        <div class="app-icon">🔔</div>
+                        <h4>Alertas Precoces</h4>
+                        <p>Notificações quando padrões anormais são detetados</p>
+                    </div>
+                    <div class="app-feature">
+                        <div class="app-icon">📱</div>
+                        <h4>Bluetooth</h4>
+                        <p>Ligação direta e segura com o dispositivo</p>
+                    </div>
+                    <div class="app-feature">
+                        <div class="app-icon">🎨</div>
+                        <h4>Interface Visual</h4>
+                        <p>Cores e ícones para interpretação imediata</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Section -->
+    <section id="mercado">
+        <div class="container">
+            <div class="section-header">
+                <h2>Mercado</h2>
+                <p>
+                    O mercado global de análise de urina ultrapassa os 4 mil milhões de dólares, 
+                    impulsionado pelo crescimento da health tech domiciliária.
+                </p>
+            </div>
+            <div class="market-stats">
+                <div class="stat-card">
+                    <div class="stat-number">B2C</div>
+                    <div class="stat-label">Mulheres em idade fértil<br>Homens com +50 anos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">B2B</div>
+                    <div class="stat-label">Parcerias com lares<br>e instituições</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">B2G</div>
+                    <div class="stat-label">Colaboração com SNS<br>para prevenção</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="precos">
+        <div class="container">
+            <div class="section-header">
+                <h2>Modelo de Negócio</h2>
+                <p>Acessível e escalável para todos</p>
+            </div>
+            <div class="pricing-card">
+                <div class="price">150€</div>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Dispositivo InnerSignal</p>
+                <ul class="pricing-features">
+                    <li>✓ Dispositivo reutilizável e partilhável</li>
+                    <li>✓ Instalação simples</li>
+                    <li>✓ App móvel incluída</li>
+                    <li>✓ Análises básicas gratuitas</li>
+                    <li>✓ Subscrição premium opcional para análises avançadas</li>
+                    <li>✓ Histórico clínico detalhado</li>
+                    <li>✓ Futura integração com sistemas de saúde</li>
+                </ul>
+                <a href="#contacto" class="btn btn-primary" style="margin-top: 2rem;">Reserva já</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Transforma um gesto diário</h2>
+                <p>
+                    O InnerSignal não substitui médicos. Antecipamos sinais. 
+                    Transformamos um gesto diário num aliado silencioso da saúde preventiva.
+                </p>
+                <a href="#contacto" class="btn btn-primary">Junta-te à revolução</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="footer-logo">InnerSignal</div>
+                <p>
+                    Porque detetar mais cedo... muda tudo.
+                </p>
+                <p style="font-size: 0.9rem;">
+                    © 2026 InnerSignal. Todos os direitos reservados.
+                </p>
+            </div>
+            <div class="footer-section">
+                <h4>Produto</h4>
+                <ul>
+                    <li><a href="#solucao">Como funciona</a></li>
+                    <li><a href="#precos">Preços</a></li>
+                    <li><a href="#">Tecnologia</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Equipa</a></li>
+                    <li><a href="#">Carreiras</a></li>
+                    <li><a href="#">Imprensa</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul>
+                    <li><a href="mailto:info@innersignal.pt">info@innersignal.pt</a></li>
+                    <li><a href="#">Suporte</a></li>
+                    <li><a href="#">Parcerias</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>InnerSignal - Inovação portuguesa em saúde preventiva</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.section-header, .problem-card, .feature, .app-feature, .stat-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(5, 10, 14, 0.95)';
+            } else {
+                nav.style.background = 'rgba(5, 10, 14, 0.8)';
+            }
+        });
+    </script>
+</body>
+</html>
